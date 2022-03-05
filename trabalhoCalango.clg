@@ -1,0 +1,92 @@
+algoritmo trabalhoCalango;
+// Síntese
+//  Objetivo:  Receber um vetor de dados e calcular algumas medidas resumo (média, mínimo, máximo e mediana)
+//  Entrada : Número de observações, dados
+//  Saída   : Média, mínimo, máximo e mediana
+
+// Receber número de observações e, a partir disso, dentro de um laço de repetição, receber os dados e armazenar em formato vetor.
+// Utilizando a técnica de Selection Sort, ordenar os dados (importante para o calculo da mediana)
+// Através de um laço de repetição e condicionais armazenar os números máximo e mínimo.
+// Através de uma modularização (procedimento) calcular a média.
+
+principal
+	// Declarações
+	real dados[999], media, minimo, maximo, mediana, menor;
+	inteiro i, n, ptroca, pmenor;
+
+	// Instruções
+
+	// Número de observações
+	escreva("Digite o número de observações: ");
+	leia(n);
+
+	// Dados
+	escreval("Digite as observações: ");
+	para (i de 0 ate n-1 passo 1) faca
+		leia(dados[i]);
+	fimPara
+
+	// Ordenar dados
+	para (ptroca de 0 ate n-1 passo 1) faca
+		menor=dados[ptroca];
+		pmenor=ptroca;
+
+		para(i de ptroca ate n-1 passo 1) faca
+			se (dados[i]<menor) entao
+				menor=dados[i];
+				pmenor=i;
+			fimSe
+		fimPara
+
+		dados[pmenor]=dados[ptroca];
+		dados[ptroca]=menor;
+		
+	fimPara
+
+	// Encontrar máximo e mínimo
+	maximo = -99999999;
+	minimo = 99999999;
+	para (i de 0 ate n-1 passo 1) faca
+		se (dados[i] > maximo) entao
+			maximo = dados[i];
+		fimSe
+		se (dados[i] < minimo) entao
+			minimo = dados[i];
+		fimSe
+	fimPara
+
+	// Calcular mediana
+	se (n%2==0) entao
+		mediana = (dados[n/2]  + dados[(n/2)+1])/2;
+	senao
+		mediana = dados[n/2];
+	fimSe
+
+	// Calcular média (procedimento)
+	media = 0;
+	calcular_media(media, n, dados);
+
+	// Escrever saídas
+	escreval( "| MEDIDAS RESUMO |");
+	escreval("  _ _ _ _ _ _ _ _");
+	escreval("| MÍNIMO  = ", minimo::2, " |");
+	escreval("| MÉDIA   = ", media::2, " |");
+	escreval("| MEDIANA = ", mediana::2, " |");
+	escreval("| MÁXIMO  = ", maximo::2, " |");
+	escreval("  _ _ _ _ _ _ _ _");
+		
+fimPrincipal
+
+// Procedimento de calculo da média
+procedimento calcular_media(ref real media, inteiro n, real dados[])
+	inteiro i;
+	real soma;
+
+	soma = 0;
+	
+	para (i de 0 ate n-1  passo 1)  faca
+		soma = soma + dados[i];
+	fimPara
+	
+	media = soma/n;
+fimProcedimento
